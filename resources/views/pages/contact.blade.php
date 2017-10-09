@@ -6,7 +6,6 @@
     <!-- contact form -->
     <div class="row">
         <div class="col-md-8">
-            <h1>Contact Me</h1>
             <div class="form-area">
                 <form role="form">
                     <br style="clear:both">

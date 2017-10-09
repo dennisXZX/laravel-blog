@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
 
 class PostController extends Controller
 {
@@ -23,7 +24,6 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
         return view('posts.create');
     }
 
@@ -35,7 +35,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate the data
+        // https://laravel.com/docs/5.5/validation#rule-required
+        $this->validate($request, array(
+            'title' => 'required|max:255',
+            'body' => 'required'
+        ));
+
+        // store in the database
+        $post = new Post;
+        $post->title = $request->title;
+        $post->body = $request->body;
+
+        $post->save();
+
+        // redirect to another page
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
