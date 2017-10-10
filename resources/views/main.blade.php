@@ -10,6 +10,8 @@
 
         <!-- main content -->
         <div class="container">
+            @include('partials._message')
+
             <!-- page specific content -->
             @yield('content')
 
