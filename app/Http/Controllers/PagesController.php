@@ -17,8 +17,7 @@ class PagesController extends Controller {
         $data = [];
         $data['email'] = $email;
         $data['fullname'] = $fullname;
-        return view('pages.about')
-                    ->withData($data);
+        return view('pages.about')->withData($data);
     }
 
     public function getContact() {

@@ -11,6 +11,8 @@
         <div class="col-md-8 col-md-offset-2">
             <h1>Create New Post</h1>
             <hr />
+            {{-- the route property specifies a named routes (php artisan route:list) --}}
+            {{-- data-parsley-validate initiates the form validation --}}
             {!! Form::open(['route' => 'posts.store', 'data-parsley-validate' => '']) !!}
                 {{ Form::label('title', 'Title:') }}
                 {{ Form::text('title', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '255')) }}

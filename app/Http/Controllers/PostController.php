@@ -44,7 +44,7 @@ class PostController extends Controller
         ));
 
         // store in the database
-        $post = new Post;
+        $post = new Post();
         $post->title = $request->title;
         $post->body = $request->body;
 
@@ -54,7 +54,8 @@ class PostController extends Controller
         // you can change session setting in config/session.php
         Session::flash('success', 'The blog post was successfully saved!');
 
-        // redirect to another page
+        // redirect to a named route 'posts.show', which expects a post parameter posts/{post}
+        // when the Post object is saved to the database, it should have a new id property
         return redirect()->route('posts.show', $post->id);
     }
 
