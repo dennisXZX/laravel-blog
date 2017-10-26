@@ -55,7 +55,7 @@ class PostController extends Controller
 
         // generate a flash message which is stored in session
         // you can change session setting in config/session.php
-        Session::flash('success', 'The blog post was successfully saved!');
+        Session::flash('success', 'The post was successfully saved!');
 
         // redirect to a named route 'posts.show', which expects a post parameter posts/{post}
         // when the Post object is saved to the database, it should have a new id property
@@ -114,7 +114,7 @@ class PostController extends Controller
 
         // generate a flash message which is stored in session
         // you can change session setting in config/session.php
-        Session::flash('success', 'The blog post was successfully changed!');
+        Session::flash('success', 'The post was successfully changed!');
 
         // redirect to a named route 'posts.show', which expects a post parameter posts/{post}
         // when the Post object is saved to the database, it should have a new id property
@@ -129,6 +129,16 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // find the post
+        $post = Post::find($id);
+
+        // delete the post from database
+        $post->delete();
+
+        // generate a flash message which is stored in session
+        // you can change session setting in config/session.php
+        Session::flash('success', 'The post was successfully deleted!');
+
+        return redirect()->route('posts.index');
     }
 }
