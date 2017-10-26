@@ -40,6 +40,10 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <div class="text-center">
+                {{ $posts->links() }}
+            </div>
         </col-md-12>
     </div>
 @endsection
