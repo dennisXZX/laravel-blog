@@ -97,7 +97,28 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // validate the data
+        // https://laravel.com/docs/5.5/validation#rule-required
+        $this->validate($request, array(
+            'title' => 'required|max:255',
+            'body' => 'required'
+        ));
+
+        // store in the database
+        $post = Post::find($id);
+
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+
+        $post->save();
+
+        // generate a flash message which is stored in session
+        // you can change session setting in config/session.php
+        Session::flash('success', 'The blog post was successfully changed!');
+
+        // redirect to a named route 'posts.show', which expects a post parameter posts/{post}
+        // when the Post object is saved to the database, it should have a new id property
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
