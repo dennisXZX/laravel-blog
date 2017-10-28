@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
+
 class PagesController extends Controller {
 
     public function getIndex() {
-        return view('pages.welcome');
+        // since Post is a model, Post:: indicates 'SELECT * FROM posts'
+        $posts = Post::orderBy('created_at', 'desc')->take(4)->get();
+
+        return view('pages.welcome')->withPosts($posts);
     }
 
     public function getAbout() {

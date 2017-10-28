@@ -15,8 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        // retrieve 5 posts from database
-        $posts = Post::paginate(5);
+        // order the result in descending order and retrieve first 5 posts
+        $posts = Post::orderBy('updated_at', 'desc')->paginate(5);
 
         return view('posts.index')->withPosts($posts);
     }
