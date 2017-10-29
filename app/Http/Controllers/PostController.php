@@ -70,7 +70,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         return view('posts.show')->withPost($post);
     }
 
@@ -83,7 +83,7 @@ class PostController extends Controller
     public function edit($id)
     {
         // find the post with the passed in id from database
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
 
         return view('posts.edit')->withPost($post);
     }
@@ -105,7 +105,7 @@ class PostController extends Controller
         ));
 
         // store in the database
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
 
         $post->title = $request->input('title');
         $post->body = $request->input('body');

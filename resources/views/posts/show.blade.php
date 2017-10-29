@@ -28,6 +28,9 @@
                         {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-block']) !!}
                         {!! Form::close() !!}
                     </div>
+                    <div class="col-sm-12">
+                        {!! link_to_route('posts.index', 'See All Posts', [], array('class' => 'btn btn-default btn-block btn-h1-spacing')); !!}
+                    </div>
                 </div>
             </div>
         </div>
