@@ -16,11 +16,11 @@
                 </dl>
                 <dl class="dl-horizontal">
                     <label>Create At:</label>
-                    <p>{{ date('j M, Y H:i', strtotime($post->created_at)) }}</p>
+                    <p>{{ dateFormatter('j M, Y H:i', $post->created_at) }}</p>
                 </dl>
                 <dl class="dl-horizontal">
                     <label>Last Updated:</label>
-                    <p>{{ date('j M, Y H:i', strtotime($post->updated_at)) }}</p>
+                    <p>{{ dateFormatter('j M, Y H:i', $post->updated_at) }}</p>
                 </dl>
                 <hr />
                 <div class="row">

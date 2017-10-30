@@ -18,6 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            // rememberToken() generates a hash value and stores in database
+            // when user logs back in it compares this hash value with its cookie
+            // so when user clears its cookie, the 'remember me' feature would stop to work
             $table->rememberToken();
             $table->timestamps();
         });

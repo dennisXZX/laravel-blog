@@ -11,10 +11,14 @@
 |
 */
 
-Route::get('blog/{slug}', ['uses' => 'BlogController@getSingle', 'as' => 'blog.single'])
+// use where method to constrain the format of route parameters
+// [\w\d\-\_]+ means the slug must be composed of any number of word, digit, '-' and '_'
+Route::get('blog/{slug}', 'BlogController@getSingle')
+        ->name('blog.single')
         ->where('slug', '[\w\d\-\_]+');
 
-Route::get('blog', ['uses' => 'BlogController@getIndex', 'as' => 'blog.index']);
+Route::get('blog', 'BlogController@getIndex')
+        ->name('blog.index');
 
 Route::get('contact', 'PagesController@getContact');
 
