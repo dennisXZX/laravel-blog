@@ -12,7 +12,7 @@
             <div class="well">
                 <dl class="dl-horizontal">
                     <label>Url:</label>
-                    <a href="{{ url($post->slug) }}">{{ url($post->slug) }}</a>
+                    <a href="{{ route('blog.single', $post->slug) }}">{{ route('blog.single', $post->slug) }}</a>
                 </dl>
                 <dl class="dl-horizontal">
                     <label>Create At:</label>
