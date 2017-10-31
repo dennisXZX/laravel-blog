@@ -8,6 +8,12 @@ use Session;
 
 class PostController extends Controller
 {
+
+    public function __construct() {
+        // only authenticated users can access
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -41,11 +47,11 @@ class PostController extends Controller
     {
         // validate the data
         // https://laravel.com/docs/5.5/validation#rule-required
-        $this->validate($request, array(
+        $request->validate([
             'title' => 'required|max:255',
             'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'body' => 'required'
-        ));
+        ]);
 
         // store in the database
         $post = Post::create($request->all());
@@ -96,11 +102,11 @@ class PostController extends Controller
     {
         // validate the data
         // https://laravel.com/docs/5.5/validation#rule-required
-        $this->validate($request, array(
+        $request->validate([
             'title' => 'required|max:255',
             'slug' => 'required|alpha_dash|min:5|max:255',
             'body' => 'required'
-        ));
+        ]);
 
         // update the post
         $post = Post::findOrFail($id)->update($request->all());
