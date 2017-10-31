@@ -2,6 +2,11 @@
 
 @section('title', ' | Edit Blog Post')
 
+@section('stylesheets')
+    {{-- Select2 CSS --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+@endsection
+
 @section('content')
     <div class="row">
         {{-- bind a Post model to the form --}}
@@ -15,6 +20,9 @@
 
             {{ Form::label('category_id', 'Category:', ['class' => 'form-spacing-top']) }}
             {{ Form::select('category_id', $categoriesArray, $post->category_id, ['class' => 'form-control']) }}
+
+            {{ Form::label('tags', 'Tags:', ['class' => 'form-spacing-top']) }}
+            {{ Form::select('tags[]', $tagsArray, null, ['class' => 'form-control select2-multi', 'multiple' => 'multiple']) }}
 
             {{ Form::label('body', 'Body:', ['class' => 'form-spacing-top']) }}
             {{ Form::textarea('body', null, ['class' => 'form-control']) }}
@@ -43,4 +51,13 @@
         </div>
         {!! Form::close() !!}
     </div>
+@endsection
+
+@section('scripts')
+    {{-- Select2 library --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+
+    <script>
+        $('.select2-multi').select2();
+    </script>
 @endsection

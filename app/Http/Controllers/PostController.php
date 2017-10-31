@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Post;
+use App\Tag;
 use Session;
 
 class PostController extends Controller
@@ -35,10 +36,12 @@ class PostController extends Controller
      */
     public function create()
     {
-        // retrieve all categories
+        // retrieve all categories and tags
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('posts.create')->withCategories($categories);
+        return view('posts.create')->withCategories($categories)
+                                        ->withTags($tags);
     }
 
     /**
@@ -60,6 +63,10 @@ class PostController extends Controller
 
         // store the post into the database
         $post = Post::create($request->all());
+
+        // set the association between post and tags
+        // the false flag means add the new association instead of overwriting them
+        $post->tags()->sync($request->tags, false);
 
         // generate a flash message which is stored in session
         // you can change session setting in config/session.php
@@ -95,12 +102,22 @@ class PostController extends Controller
         $categories = Category::all();
         $categoriesArray = [];
 
+        $tags = Tag::all();
+        $tagsArray = [];
+
+        // put all categories into an array
         foreach ($categories as $category) {
             $categoriesArray[$category->id] = $category->name;
         }
 
+        // put all tags into an array
+        foreach ($tags as $tag) {
+            $tagsArray[$tag->id] = $tag->name;
+        }
+
         return view('posts.edit')->withPost($post)
-                                      ->withCategoriesArray($categoriesArray);
+                                      ->withCategoriesArray($categoriesArray)
+                                      ->withTagsArray($tagsArray);
     }
 
     /**
@@ -123,6 +140,14 @@ class PostController extends Controller
         // update the post
         $post = Post::findOrFail($id);
         $post->update($request->all());
+
+        // check if there is any tag
+        if (isset($request->tags)) {
+            // set the association between post and tags
+            $post->tags()->sync($request->tags);
+        } else {
+            $post->tags()->sync([]);
+        }
 
         // generate a flash message which is stored in session
         // you can change session setting in config/session.php
