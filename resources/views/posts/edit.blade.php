@@ -32,7 +32,7 @@
                         {{ Form::submit('Save Changes', ['class' => 'btn btn-success btn-block']) }}
                     </div>
                     <div class="col-sm-6">
-                        {!! link_to_route('posts.update', 'Delete', array($post->id), array('class' => 'btn btn-danger btn-block')); !!}
+                        {!! link_to_route('posts.show', 'Cancel', array($post->id), array('class' => 'btn btn-danger btn-block')); !!}
 
                     </div>
                 </div>
