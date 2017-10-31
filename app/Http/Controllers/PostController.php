@@ -58,7 +58,7 @@ class PostController extends Controller
             'body'          => 'required'
         ]);
 
-        // store in the database
+        // store the post into the database
         $post = Post::create($request->all());
 
         // generate a flash message which is stored in session

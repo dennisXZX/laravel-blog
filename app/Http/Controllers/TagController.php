@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use Illuminate\Http\Request;
+use App\Tag;
 use Session;
 
-class CategoryController extends Controller
+class TagController extends Controller
 {
 
     public function __construct() {
@@ -21,11 +21,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('categories.index')->withCategories($categories);
+        return view('tags.index')->withTags($tags);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -38,17 +37,17 @@ class CategoryController extends Controller
         // validate the data
         // https://laravel.com/docs/5.5/validation#rule-required
         $request->validate([
-            'name' => 'required|max:255|unique:categories,name'
+            'name' => 'required|max:255|unique:tags,name'
         ]);
 
-        // store the category into the database
-        Category::create($request->all());
+        // store the tag into the database
+        Tag::create($request->all());
 
         // generate a flash message which is stored in session
         // you can change session setting in config/session.php
-        Session::flash('success', 'New category was successfully created!');
+        Session::flash('success', 'New tag was successfully created!');
 
-        return redirect()->route('categories.index');
+        return redirect()->route('tags.index');
     }
 
     /**
