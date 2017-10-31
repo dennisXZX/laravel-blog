@@ -58,7 +58,8 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        //
+        $tag = Tag::find($id);
+        return view('tags.show')->withTag($tag);
     }
 
     /**
@@ -69,7 +70,8 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tag = Tag::find($id);
+        return view('tags.edit')->withTag($tag);
     }
 
     /**
@@ -81,7 +83,22 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tag = Tag::find($id);
+
+        // validate the data
+        // https://laravel.com/docs/5.5/validation#rule-required
+        $request->validate([
+            'name' => 'required|max:255|unique:tags,name'
+        ]);
+
+        $tag->name = $request->name;
+        $tag->save();
+
+        // generate a flash message which is stored in session
+        // you can change session setting in config/session.php
+        Session::flash('success', 'Successfully saved your new tag!');
+
+        return redirect()->route('tags.show', $tag->id);
     }
 
     /**
