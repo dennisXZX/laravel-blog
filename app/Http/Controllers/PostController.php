@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
 use App\Post;
 use Session;
 
@@ -34,7 +35,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        // retrieve all categories
+        $categories = Category::all();
+
+        return view('posts.create')->withCategories($categories);
     }
 
     /**
@@ -48,9 +52,10 @@ class PostController extends Controller
         // validate the data
         // https://laravel.com/docs/5.5/validation#rule-required
         $request->validate([
-            'title' => 'required|max:255',
-            'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
-            'body' => 'required'
+            'title'         => 'required|max:255',
+            'slug'          => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+            'category_id'   => 'required|integer',
+            'body'          => 'required'
         ]);
 
         // store in the database
@@ -87,8 +92,15 @@ class PostController extends Controller
     {
         // find the post with the passed in id from database
         $post = Post::findOrFail($id);
+        $categories = Category::all();
+        $categoriesArray = [];
 
-        return view('posts.edit')->withPost($post);
+        foreach ($categories as $category) {
+            $categoriesArray[$category->id] = $category->name;
+        }
+
+        return view('posts.edit')->withPost($post)
+                                      ->withCategoriesArray($categoriesArray);
     }
 
     /**
@@ -104,12 +116,13 @@ class PostController extends Controller
         // https://laravel.com/docs/5.5/validation#rule-required
         $request->validate([
             'title' => 'required|max:255',
-            'slug' => 'required|alpha_dash|min:5|max:255',
-            'body' => 'required'
+            'slug'  => 'required|alpha_dash|min:5|max:255',
+            'body'  => 'required'
         ]);
 
         // update the post
-        $post = Post::findOrFail($id)->update($request->all());
+        $post = Post::findOrFail($id);
+        $post->update($request->all());
 
         // generate a flash message which is stored in session
         // you can change session setting in config/session.php

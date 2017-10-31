@@ -18,15 +18,22 @@
                 {{ Form::label('title', 'Title:') }}
                 {{ Form::text('title', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '255')) }}
 
-                {{ Form::label('slug', 'Slug:') }}
+                {{ Form::label('slug', 'Slug:', ['class' => 'form-spacing-top']) }}
                 {{ Form::text('slug', null, array('class' => 'form-control', 'required' => '', 'minlength' => '5', 'maxlength' => '255')) }}
 
-                {{ Form::label('body', 'Post Body:') }}
-                {{ Form::textarea('body', null, array('class' => 'form-control', 'required' => '')) }}
+                {{ Form::label('category_id', 'Category:', ['class' => 'form-spacing-top']) }}
+                <select name="category_id" class="form-control">
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+
+                {{ Form::label('body', 'Post Body:', ['class' => 'form-spacing-top']) }}
+                {{ Form::textarea('body', null, ['class' => 'form-control', 'required' => '']) }}
 
                 {{
-                    Form::submit('Create Post', array('class' => 'btn btn-success btn-lg btn-block',
-                                                      'style' => 'margin-top: 20px;'))
+                    Form::submit('Create Post', ['class' => 'btn btn-success btn-lg btn-block',
+                                                 'style' => 'margin-top: 20px;'])
                 }}
             {!! Form::close() !!}
         </div>

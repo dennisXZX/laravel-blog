@@ -15,6 +15,10 @@
                     <a href="{{ route('blog.single', $post->slug) }}">{{ route('blog.single', $post->slug) }}</a>
                 </dl>
                 <dl class="dl-horizontal">
+                    <label>Category:</label>
+                    <p>{{ $post->category->name }}</p>
+                </dl>
+                <dl class="dl-horizontal">
                     <label>Create At:</label>
                     <p>{{ dateFormatter('j M, Y H:i', $post->created_at) }}</p>
                 </dl>
