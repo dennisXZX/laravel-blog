@@ -11,10 +11,16 @@
 |
 */
 
-// authentication route
+/*
+*  authentication routes
+*/
 Auth::routes();
 
 Route::get('/logout', 'Auth\LoginController@logout');
+
+/*
+*  blog routes
+*/
 
 // use where method to constrain the format of route parameters
 // [\w\d\-\_]+ means the slug must be composed of any number of word, digit, '-' and '_'
@@ -25,13 +31,20 @@ Route::get('blog/{slug}', 'BlogController@getSingle')
 Route::get('blog', 'BlogController@getIndex')
         ->name('blog.index');
 
+/*
+*  page routes
+*/
+
 Route::get('contact', 'PagesController@getContact');
 
 Route::get('about', 'PagesController@getAbout');
 
 Route::get('/', 'PagesController@getIndex');
 
-// resource routes
+/*
+*  resource routes
+*/
+
 Route::resource('posts', 'PostController');
 Route::resource('categories', 'CategoryController', ['except' => 'create']);
 Route::resource('tags', 'TagController', ['except' => 'create']);

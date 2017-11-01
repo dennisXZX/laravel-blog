@@ -1,4 +1,4 @@
-@extends('main')
+@extends('layouts.main')
 
 @section('title', ' | Create New Post')
 
@@ -20,10 +20,10 @@
             {{-- Blade {{  }} statements are automatically sent through PHP's htmlentities function to prevent XSS attacks. --}}
             {!! Form::open(['route' => 'posts.store', 'data-parsley-validate' => '']) !!}
                 {{ Form::label('title', 'Title:') }}
-                {{ Form::text('title', null, array('class' => 'form-control', 'required' => '', 'maxlength' => '255')) }}
+                {{ Form::text('title', null, ['class' => 'form-control', 'required' => '', 'maxlength' => '255']) }}
 
                 {{ Form::label('slug', 'Slug:', ['class' => 'form-spacing-top']) }}
-                {{ Form::text('slug', null, array('class' => 'form-control', 'required' => '', 'minlength' => '5', 'maxlength' => '255')) }}
+                {{ Form::text('slug', null, ['class' => 'form-control', 'required' => '', 'minlength' => '5', 'maxlength' => '255']) }}
 
                 {{ Form::label('category_id', 'Category:', ['class' => 'form-spacing-top']) }}
                 <select name="category_id" class="form-control">

@@ -1,4 +1,4 @@
-@extends('main')
+@extends('layouts.main')
 
 @section('title', ' | All Posts')
 
@@ -16,7 +16,7 @@
     </div>
 
     <div class="row">
-        <col-md-12>
+        <div class="col-md-12">
             <table class="table">
                 <thead>
                     <th>#</th>
@@ -44,6 +44,6 @@
             <div class="text-center">
                 {{ $posts->links() }}
             </div>
-        </col-md-12>
+        </div>
     </div>
 @endsection
