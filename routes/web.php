@@ -11,11 +11,10 @@
 |
 */
 
+// authentication route
 Auth::routes();
 
 Route::get('/logout', 'Auth\LoginController@logout');
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 // use where method to constrain the format of route parameters
 // [\w\d\-\_]+ means the slug must be composed of any number of word, digit, '-' and '_'
@@ -32,7 +31,7 @@ Route::get('about', 'PagesController@getAbout');
 
 Route::get('/', 'PagesController@getIndex');
 
+// resource routes
 Route::resource('posts', 'PostController');
-
 Route::resource('categories', 'CategoryController', ['except' => 'create']);
 Route::resource('tags', 'TagController', ['except' => 'create']);
