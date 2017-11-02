@@ -65,8 +65,7 @@ class PostController extends Controller
         $post = Post::create($request->all());
 
         // set the association between post and tags
-        // the false flag means add the new association instead of overwriting them
-        $post->tags()->sync($request->tags, false);
+        $post->tags()->sync($request->tags);
 
         // generate a flash message which is stored in session
         // you can change session setting in config/session.php
@@ -166,8 +165,14 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        // find the post
+        $post = Post::find($id);
+
+        // remove the relationship with tags
+        $post->tags()->detach();
+
         // delete the post from database
-        $post = Post::destroy($id);
+        $post->delete();
 
         // generate a flash message which is stored in session
         // you can change session setting in config/session.php

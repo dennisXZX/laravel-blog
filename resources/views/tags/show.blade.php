@@ -7,8 +7,13 @@
         <div class="col-md-8">
             <h2>{{ $tag->name }} {{ $tag->posts()->count() }} {{ $tag->posts()->count() > 0 ? 'Posts' : 'Post' }}</h2>
         </div>
-        <div class="col-md-2 col-md-offset-2">
+        <div class="col-md-2">
             <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-primary pull-right btn-block form-spacing-top">Edit</a>
+        </div>
+        <div class="col-md-2">
+            {{ Form::open(['route' => ['tags.destroy', $tag->id], 'method' => 'DELETE']) }}
+                {{ Form::submit('Delete', ['class' => 'btn btn-danger btn-block form-spacing-top']) }}
+            {{ Form::close() }}
         </div>
     </div>
 

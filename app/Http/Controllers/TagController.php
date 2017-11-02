@@ -109,6 +109,18 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // find the tag
+        $tag = Tag::find($id);
+
+        // remove relationship with post
+        $tag->posts()->detach();
+
+        $tag->delete();
+
+        // generate a flash message which is stored in session
+        // you can change session setting in config/session.php
+        Session::flash('success', 'The tag was successfully deleted!');
+
+        return redirect()->route('tags.index');
     }
 }
