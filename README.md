@@ -12,3 +12,7 @@ The form in this app was built using a form component provided by [Laravel Colle
 ### Form Validation
 
 The front end form validation is done by [Parsley.js](http://parsleyjs.org/). Backend form validation is also implemented using Laravel built-in validation.
+
+### Email
+
+[Mailtrap](mailtrap.io) is used to handle emails.
