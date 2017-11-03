@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use Mail;
+use Session;
+use Illuminate\Http\Request;
 
 class PagesController extends Controller {
 
@@ -20,6 +23,35 @@ class PagesController extends Controller {
 
     public function getContact() {
         return view('pages.contact');
+    }
+
+    public function postContact(Request $request) {
+        // validate the data
+        // https://laravel.com/docs/5.5/validation#rule-required
+        $request->validate([
+            'email' => 'required|email',
+            'subject'  => 'required',
+            'bodyMessage' => 'required'
+        ]);
+
+        $data = [
+            'email' => $request->email,
+            'subject' => $request->subject,
+            'bodyMessage' => $request->bodyMessage
+        ];
+
+        // send the mail
+        Mail::send('emails.contact', $data, function($message) use ($data) {
+            $message->from($data['email']);
+            $message->to('hello@dennisxiao.com');
+            $message->subject($data['subject']);
+        });
+
+        // generate a flash message which is stored in session
+        // you can change session setting in config/session.php
+        Session::flash('success', 'Your email was sent!');
+
+        return redirect('/');
     }
 
 }
