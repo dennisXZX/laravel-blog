@@ -1,6 +1,9 @@
 @extends('layouts.main')
 
-@section('title', "| $post->title")
+{{-- escape the HTML title XSS attack --}}
+<?php $title = htmlspecialchars($post->title) ?>
+
+@section('title', "| $title")
 
 @section('content')
     <div class="row">

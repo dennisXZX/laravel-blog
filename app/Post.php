@@ -23,4 +23,9 @@ class Post extends Model
     public function tags() {
         return $this->belongsToMany('App\Tag');
     }
+
+    // set up the relationship with Comment model
+    public function comments() {
+        return $this->hasMany('App\Comment');
+    }
 }

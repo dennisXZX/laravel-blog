@@ -32,6 +32,12 @@ Route::get('blog', 'BlogController@getIndex')
         ->name('blog.index');
 
 /*
+*  comment routes
+*/
+
+Route::post('comments/{post_id}', ['uses' => 'CommentsController@store', 'as' => 'comments.store']);
+
+/*
 *  page routes
 */
 
