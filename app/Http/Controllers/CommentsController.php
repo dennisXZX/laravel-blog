@@ -96,7 +96,34 @@ class CommentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comment = Comment::find($id);
+
+        // validate the data
+        // https://laravel.com/docs/5.5/validation#rule-required
+        $request->validate([
+            'comment' => 'required',
+        ]);
+
+        // update the comment
+        $comment->comment = $request->comment;
+
+        $comment->save();
+
+        // generate a flash message which is stored in session
+        // you can change session setting in config/session.php
+        Session::flash('success', 'The comment was successfully updated!');
+
+        // redirect to a named route 'posts.show', which expects a post parameter posts/{post}
+        // when the Post object is saved to the database, it should have a new id property
+        return redirect()->route('posts.show', $comment->post->id);
+
+    }
+
+    public function delete($id)
+    {
+        $comment = Comment::find($id);
+
+        return view('comments.delete')->withComment($comment);
     }
 
     /**
@@ -107,6 +134,17 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::find($id);
+
+        // save the post id before the comment is being deleted
+        $post_id = $comment->post->id;
+
+        $comment->delete();
+
+        // generate a flash message which is stored in session
+        // you can change session setting in config/session.php
+        Session::flash('success', 'The comment was successfully deleted!');
+
+        return redirect()->route('posts.show', $post_id);
     }
 }
