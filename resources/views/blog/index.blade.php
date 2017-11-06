@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <h2>{{ $post->title }}</h2>
             <h5>Published: {{ dateFormatter('M j, Y', $post->created_at) }}</h5>
-            <p>{{ substr($post->body, 0, 250) }}{{ hasEllipsis($post->body, 250) }}</p>
+            <p>{{ substr(strip_tags($post->body), 0, 250) }}{{ hasEllipsis(strip_tags($post->body), 250) }}</p>
             <a href="{{ route('blog.single', $post->slug) }}" class="btn btn-primary">Read More</a>
         </div>
     </div>

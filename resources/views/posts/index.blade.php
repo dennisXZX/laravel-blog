@@ -30,7 +30,7 @@
                         <tr>
                             <th>{{ $post->id }}</th>
                             <td>{{ $post->title }}</td>
-                            <td>{{ substr($post->body, 0, 50) }}{{ hasEllipsis($post->body, 50) }}</td>
+                            <td>{{ substr(strip_tags($post->body), 0, 50) }}{{ hasEllipsis(strip_tags($post->body), 50) }}</td>
                             <td>{{ dateFormatter('j M, Y H:i', $post->created_at) }}</td>
                             <td>
                                 <a href="{{ route('posts.show', $post->id) }}" class="btn btn-default">View</a>

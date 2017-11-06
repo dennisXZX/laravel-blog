@@ -54,6 +54,17 @@
 @endsection
 
 @section('scripts')
+    {{-- TinyMAC library --}}
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector:'textarea',
+            plugins: 'link code',
+            menubar: false
+        });
+    </script>
+
     {{-- Select2 library --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 

@@ -40,7 +40,7 @@
                 </select>
 
                 {{ Form::label('body', 'Post Body:', ['class' => 'form-spacing-top']) }}
-                {{ Form::textarea('body', null, ['class' => 'form-control', 'required' => '']) }}
+                {{ Form::textarea('body', null, ['class' => 'form-control']) }}
 
                 {{
                     Form::submit('Create Post', ['class' => 'btn btn-success btn-lg btn-block',
@@ -53,6 +53,17 @@
 
 @section('scripts')
     {!! Html::script('js/parsley.min.js') !!}
+
+    {{-- TinyMAC library --}}
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector:'textarea',
+            plugins: 'link code',
+            menubar: false
+        });
+    </script>
 
     {{-- Select2 library --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
