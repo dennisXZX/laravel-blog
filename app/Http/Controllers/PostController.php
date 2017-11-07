@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Post;
 use App\Tag;
+use Illuminate\Support\Facades\Storage;
 use Mews\Purifier\Facades\Purifier;
 use Intervention\Image\Facades\Image;
 use Session;
@@ -57,10 +58,11 @@ class PostController extends Controller
         // validate the data
         // https://laravel.com/docs/5.5/validation#rule-required
         $request->validate([
-            'title'         => 'required|max:255',
-            'slug'          => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
-            'category_id'   => 'required|integer',
-            'body'          => 'required'
+            'title'          => 'required|max:255',
+            'slug'           => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+            'category_id'    => 'required|integer',
+            'body'           => 'required',
+            'featured_image' => 'sometimes|image'
         ]);
 
         // store the post into the database
@@ -153,9 +155,10 @@ class PostController extends Controller
         // validate the data
         // https://laravel.com/docs/5.5/validation#rule-required
         $request->validate([
-            'title' => 'required|max:255',
-            'slug'  => 'required|alpha_dash|min:5|max:255',
-            'body'  => 'required'
+            'title'          => 'required|max:255',
+            'slug'           => "required|alpha_dash|min:5|max:255|unique:posts,slug,$id",
+            'body'           => 'required',
+            'featured_image' => 'image'
         ]);
 
         // update the post
@@ -165,6 +168,24 @@ class PostController extends Controller
         $post->slug = $request->slug;
         $post->category_id = $request->category_id;
         $post->body = clean($request->body);
+
+        // check if there is a new feature image uploaded
+        if ($request->hasFile('featured_image')) {
+            // add the new photo
+            $image = $request->file('featured_image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/') . $filename;
+            // use Intervention Image library to process the image
+            Image::make($image)->resize(800, 400)->save($location);
+            // retrieve the old file name
+            $oldFileName = $post->image;
+            // update the database
+            $post->image = $filename;
+            // delete the old photo
+            // for local development, need to update the 'root' property in 'config/filesystems.php'
+            // to 'root' => public_path('images/'),
+            Storage::delete($oldFileName);
+        }
 
         $post->save();
 
@@ -198,6 +219,9 @@ class PostController extends Controller
 
         // remove the relationship with tags
         $post->tags()->detach();
+
+        // delete the featured image associated with the post
+        Storage::delete($post->image);
 
         // delete the post from database
         $post->delete();
