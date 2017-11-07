@@ -18,7 +18,7 @@
             {{-- the route property specifies a named routes (php artisan route:list) --}}
             {{-- data-parsley-validate initiates the form validation --}}
             {{-- Blade {{  }} statements are automatically sent through PHP's htmlentities function to prevent XSS attacks. --}}
-            {!! Form::open(['route' => 'posts.store', 'data-parsley-validate' => '']) !!}
+            {!! Form::open(['route' => 'posts.store', 'data-parsley-validate' => '', 'files' => true]) !!}
                 {{ Form::label('title', 'Title:') }}
                 {{ Form::text('title', null, ['class' => 'form-control', 'required' => '', 'maxlength' => '255']) }}
 
@@ -38,6 +38,9 @@
                         <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                     @endforeach
                 </select>
+
+                {{ Form::label('featured_image', 'Upload Featured Image:', ['class' => 'form-spacing-top']) }}
+                {{ Form::file('featured_image') }}
 
                 {{ Form::label('body', 'Post Body:', ['class' => 'form-spacing-top']) }}
                 {{ Form::textarea('body', null, ['class' => 'form-control']) }}

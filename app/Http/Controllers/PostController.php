@@ -7,6 +7,7 @@ use App\Category;
 use App\Post;
 use App\Tag;
 use Mews\Purifier\Facades\Purifier;
+use Intervention\Image\Facades\Image;
 use Session;
 
 class PostController extends Controller
@@ -68,7 +69,20 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->slug = $request->slug;
         $post->category_id = $request->category_id;
+        // purify dangerous HTML tags such as <script>
         $post->body = Purifier::clean($request->body);
+
+        // save images
+        if ($request->hasFile('featured_image')) {
+            $image = $request->file('featured_image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/') . $filename;
+            // use Intervention Image library to process the image
+            Image::make($image)->resize(800, 400)->save($location);
+
+            // store in database
+            $post->image = $filename;
+        }
 
         $post->save();
 
