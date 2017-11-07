@@ -10,7 +10,7 @@ class BlogController extends Controller
     protected function getIndex() {
         // set the number of items displayed per page
         // in the view, you can display the pagination using {{ $posts->links() }}
-        $posts = Post::paginate(5);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
 
         return view('blog.index')->withPosts($posts);
     }
