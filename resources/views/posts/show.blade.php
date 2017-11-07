@@ -15,8 +15,9 @@
                 @endforeach
             </div>
 
+            @if($post->comments()->count() > 0)
             <div id="backend-comments btn-h1-spacing">
-                <h3>Comments {{ $post->comments()->count() }} total</h3>
+                <h3>Comment {{ $post->comments()->count() }} in total</h3>
 
                 <table class="table">
                     <thead>
@@ -43,6 +44,8 @@
                     </tbody>
                 </table>
             </div>
+            @endif
+
         </div>
 
         <div class="col-md-4">

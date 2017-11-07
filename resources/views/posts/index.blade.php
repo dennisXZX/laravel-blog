@@ -23,7 +23,7 @@
                     <th>Title</th>
                     <th>Body</th>
                     <th>Created At</th>
-                    <th></th>
+                    <th>Actions</th>
                 </thead>
                 <tbody>
                     @foreach ($posts as $post)
