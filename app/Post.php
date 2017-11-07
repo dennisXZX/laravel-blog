@@ -10,8 +10,7 @@ class Post extends Model
     protected $fillable = [
         'title',
         'slug',
-        'category_id',
-        'body'
+        'category_id'
     ];
 
     // set up the relationship with Category model

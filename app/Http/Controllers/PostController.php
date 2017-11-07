@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Post;
 use App\Tag;
+use Mews\Purifier\Facades\Purifier;
 use Session;
 
 class PostController extends Controller
@@ -62,7 +63,14 @@ class PostController extends Controller
         ]);
 
         // store the post into the database
-        $post = Post::create($request->all());
+        $post = new Post;
+
+        $post->title = $request->title;
+        $post->slug = $request->slug;
+        $post->category_id = $request->category_id;
+        $post->body = Purifier::clean($request->body);
+
+        $post->save();
 
         // set the association between post and tags
         $post->tags()->sync($request->tags);
@@ -138,7 +146,13 @@ class PostController extends Controller
 
         // update the post
         $post = Post::findOrFail($id);
-        $post->update($request->all());
+
+        $post->title = $request->title;
+        $post->slug = $request->slug;
+        $post->category_id = $request->category_id;
+        $post->body = clean($request->body);
+
+        $post->save();
 
         // check if there is any tag
         if (isset($request->tags)) {
